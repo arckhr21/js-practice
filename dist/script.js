@@ -14846,10 +14846,13 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/slider.js");
 /* harmony import */ var _modules_modals__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modals */ "./src/js/modules/modals.js");
+/* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
+
 
 
 window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])();
 });
 
 /***/ }),
@@ -14899,6 +14902,60 @@ var modals = function modals() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
+
+/***/ }),
+
+/***/ "./src/js/modules/tabs.js":
+/*!********************************!*\
+  !*** ./src/js/modules/tabs.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var tabs = function tabs() {
+  var glazingSlider = document.querySelector('.glazing_slider'),
+      glazingBlock = document.querySelectorAll('.glazing_block'),
+      glazingContent = document.querySelectorAll('.row.glazing_content'); // console.log(glazingBlock);
+  // console.log(glazingContent);
+
+  function hideGlazingContent(a) {
+    for (var i = a; i < glazingContent.length; i++) {
+      glazingContent[i].classList.remove('show');
+      glazingContent[i].classList.add('hide');
+    }
+  }
+
+  ;
+  hideGlazingContent(1);
+
+  function showGlazingContent(b) {
+    if (glazingContent[b].classList.contains('hide')) {
+      glazingContent[b].classList.remove('hide');
+      glazingContent[b].classList.add('show');
+    }
+  }
+
+  ;
+  glazingSlider.addEventListener('click', function (e) {
+    //получаем массив из 5-ти узлов glazing_block
+    var target = e.target;
+
+    for (var i = 0; i < glazingBlock.length; i++) {
+      if (target == glazingBlock[i].children[0] || target == glazingBlock[i].children[1] || target == glazingBlock[i]) {
+        // console.log(target);
+        // console.log(i);
+        hideGlazingContent(0);
+        showGlazingContent(i);
+        break;
+      }
+    } //end for
+
+  }); //end Listener
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (tabs);
 
 /***/ }),
 

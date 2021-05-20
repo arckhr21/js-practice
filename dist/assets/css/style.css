@@ -491,6 +491,14 @@ textarea:focus {
   color: #454545;
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
 /*Decoration*/
 .decoration {
   padding: 8rem 0;
