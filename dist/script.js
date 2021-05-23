@@ -14944,10 +14944,20 @@ var tabs = function tabs() {
 
     for (var i = 0; i < glazingBlock.length; i++) {
       if (target == glazingBlock[i].children[0] || target == glazingBlock[i].children[1] || target == glazingBlock[i]) {
-        // console.log(target);
-        // console.log(i);
         hideGlazingContent(0);
-        showGlazingContent(i);
+        showGlazingContent(i); //подключение класса active
+
+        var j = void 0,
+            glazingActive = document.querySelectorAll('.glazing_block a');
+
+        if (i != j) {
+          for (j = 0; j < glazingBlock.length; j++) {
+            glazingActive[j].classList.remove('active');
+          }
+
+          glazingActive[i].classList.add('active');
+        }
+
         break;
       }
     } //end for
