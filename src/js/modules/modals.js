@@ -8,10 +8,10 @@ const modals = () => {
 
         trigger.forEach(item => {
             item.addEventListener('click', (e) => {
-                if (e.target) {
-                    e.preventDefault();
-                   // console.log(e.target);
-                }
+               if (e.target) {
+                   e.preventDefault();
+               }
+                
     
                 modal.style.display = "block";
                 document.body.style.overflow = "hidden";
