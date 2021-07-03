@@ -1,47 +1,81 @@
 const formModals = () => {
     
-    const forms = document.querySelectorAll("form");
-    
-    console.log(forms);
-   
+    const forms = document.querySelectorAll("form"),
+          inputs = document.querySelectorAll("input"),
+          phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
-   
-    // function req(e) {
-    //     e.preventDefault();
-    //     let formData = new FormData(formMain);
-    //     const request = new XMLHttpRequest();
-    //     request.open("POST", "./assets/server.php");
-    //     request.send(formData);
+    //Обеспечение ввода только цифр
+    phoneInputs.forEach(item => {
+        item.addEventListener('input', () => {
+            item.value = item.value.replace(/\D/,'');
+        })
+    })
 
-    //     request.addEventListener('load', function() {
-    //         if (request.status == 200) {
-    //             console.log (request.response);
-    //         }
-    //     }
-    // }
-   
-        // forms
+    const message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся.',
+        failure: 'Что-то пошло не так...'
+    };
 
-        for (let i = 0; i < 9; i++) {
+    const postData = async(url, data) => {
+        document.querySelector('.status').textContent = message.loading;
+        let res = await fetch(url, {
+            method: "POST",
+            body: data
+        });
+        return await res.text();
+    };
 
-            forms[i].addEventListener("submit", (e) => {
-                e.preventDefault();
-             
-                let formData = new FormData(forms[i]);
-                const request = new XMLHttpRequest();
-                request.open("POST", "./assets/server.php");
-                request.send(formData);
-            
-                request.addEventListener('load', function() {
-                    if (request.status == 200) {
-                        console.log (request.response);
-                    }
-                })
-                // console.log("11111");
-                // console.log(i);
+    const clearInputs = () => {
+        inputs.forEach(item => {
+            item.value = '';
+        });
+    };
 
+    forms.forEach(item => {
+        item.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            item.appendChild(statusMessage);
+
+            const formData = new FormData(item);
+            postData('assets/server.php', formData)
+            .then(res => {
+                console.log(res),
+                statusMessage.textContent = message.success;
             })
-        }
+            .catch(() => statusMessage.textContent = message.failure)
+            .finally(() => {
+                clearInputs();
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 5000);
+            })
+        })
+    })
+    
+    // forms XHR
+
+//         for (let i = 0; i < forms.length; i++) {
+
+//             forms[i].addEventListener("submit", (e) => {
+//                 e.preventDefault();
+             
+//                 let formData = new FormData(forms[i]);
+//                 const request = new XMLHttpRequest();
+//                 request.open("POST", "./assets/server.php");
+//                 request.send(formData);
+            
+//                 request.addEventListener('load', function() {
+//                     if (request.status == 200) {
+//                         console.log (request.response);
+//                     }
+//                 })
+               
+//             })
+//         }
 
 };
 
