@@ -1,15 +1,14 @@
-const formModals = () => {
+import checkNumInputs from './checkNumInputs';
+
+const formModals = (state) => {
     
     const forms = document.querySelectorAll("form"),
           inputs = document.querySelectorAll("input"),
           phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
     //Обеспечение ввода только цифр
-    phoneInputs.forEach(item => {
-        item.addEventListener('input', () => {
-            item.value = item.value.replace(/\D/,'');
-        })
-    })
+   
+    checkNumInputs('input[name = "user_phone"]');
 
     const message = {
         loading: 'Загрузка...',
@@ -41,6 +40,12 @@ const formModals = () => {
             item.appendChild(statusMessage);
 
             const formData = new FormData(item);
+            if (item.getAttribute('data-calc') === "end"){
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
+            } 
+
             postData('assets/server.php', formData)
             .then(res => {
                 console.log(res),
